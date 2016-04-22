@@ -1,18 +1,37 @@
-#include "Record.h"
+#include <iostream>
+#include <iomanip>
+#include "HashTable.h"
 
-int hashFunct(int key) {
-	unsigned long hashKey = key;
-	hashKey >> 3;
-	key << 2;
-	hashKey = hashKey & key;
-	for (int i = key; i < hashKey; i++) {
-		hashKey >> i;
-		hashKey || i;
-	};
-	return hashKey;
-};
+using namespace std;
 
-void main() {
-	int key = 10;
-	std::cout << "The key is " << key << " and the hashKey is " << hashFunct(key) << endl;
-};
+int main()
+{
+
+	HashTable hashtable = new HashTable<Record>;
+
+	int inc = 0;
+	int dec = 0;
+	int ninehun = 0;
+	int onehun = 0;
+	for (int i = 0; i < MAXHASH; i++) {
+		int hashed = hashtable.hashFunct(i);
+		if (hashed > 500) {
+			inc++;
+		}
+		if (hashed <= 500) {
+			dec++;
+		}
+		if (hashed > 900) {
+			ninehun++;
+		}
+		if (hashed < 100) {
+			onehun++;
+		}
+		cout << i << "----------" << hashed << endl;
+	}
+
+	cout << "Keys above 500: " << inc << " | Keys less than 500: " << dec << " | Keys above 900: " << ninehun << " | Keys below 100: " << onehun << endl;
+	system("pause");
+	return 0;
+}
+

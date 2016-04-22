@@ -12,11 +12,13 @@ public:
 	float HashTable<T>::alpha();
 	//TODO: overload operator <<
 
+	//The following function should be private in common practice, but kept public for testing purposes.
+	int HashTable<T>::hashFunct(int key);	//hash function
+
 	template class HashTable<int>;
 
 private:
 	int capacity;   //current number of items in the hash table.
-	int HashTable<T>::hashFunct(int key);	//hash function
 
 
 };

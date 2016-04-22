@@ -1,4 +1,6 @@
 #include "HashTable.h"
+#define EULERS_CONSTANT 577	
+#define PI 314159
 
 template <typename T> HashTable::HashTable() {
 	ht = new Record<T>[MAXHASH];	//array for hash table
@@ -6,15 +8,22 @@ template <typename T> HashTable::HashTable() {
 };
 
 int HashTable<T>::hashFunct(int key) {
-	unsigned long hashKey = key;
-	hashKey >> 3;
-	key << 2;
-	hashKey = hashKey & key;
-	for (int i = key; i < hashKey; i++) {
-		hashKey >> i;
-		hashKey || i;
-	};
-	return hashKey;
+	//Hash formula is:
+	//((((key*key)/2)+(key*key))/ digits of euler's constant)*digits of pi
+	//HOWEVER, each time that key is called again outside of parentheses, it is the "new" key
+	//meaning that the first key squared is not equal to the second key squared
+	//EULERS_CONSTANT and PI are #defined in HashTable.cpp file
+	
+	key = key*key;					//square key
+	key = key / 2;					//divide key by 2
+	key = key + (key*key);			//add key squared to key
+	key = key / EULERS_CONSTANT;	//divide by euler's constant
+	key = key * PI;					//multiply key by pi
+
+	//right now, key is really freakin' big.
+	//do a % operator so we only get the remainder of what big key number is / MAXHASH
+	//this % operator should make it so that the key is within the range of 0 to 999.
+	return (key % MAXHASH);
 };
 
 bool HashTable<T>::find(int key, T& value) {
