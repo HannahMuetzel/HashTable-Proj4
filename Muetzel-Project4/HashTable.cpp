@@ -94,6 +94,7 @@ bool HashTable<T>::remove(int key) {
 		if (ht[i].getKey() == key) {
 			ht[i].setType(emptyRecord);
 			ht[i].setKey(0);
+			--numItems;
 			return true;
 		}
 	}
