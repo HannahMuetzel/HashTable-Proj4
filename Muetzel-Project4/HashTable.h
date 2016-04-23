@@ -1,24 +1,31 @@
 #pragma once
-#define MAXHASH 1000
 #include "Record.h"
 
+#define MAXHASH 999
+#define EULERS_CONSTANT 577	
+#define PI 314159
+
+template<class T>
 class HashTable {
 
 public:
 	HashTable();
-	//TODO: bool HashTable<T>::insert(int key, T value, int& collisions);
-	//TODO: bool HashTable<T>::remove(int key);
-	bool HashTable<T>::find(int key, T& value);
-	float HashTable<T>::alpha();
-	//TODO: overload operator <<
+	bool insert(int key, T value, int& collisions);
+	bool remove(int key);
+	bool find(int key, T& value);
+	float alpha();
+	friend ostream& operator<< (ostream& out, const HashTable& ht) {
+		for (size_t i = 0; i < MAXHASH; i++) {
+			out << ht[i] << " at the table position " << i << endl;
+		}
+	};
 
-	//The following function should be private in common practice, but kept public for testing purposes.
-	int HashTable<T>::hashFunct(int key);	//hash function
-
-	template class HashTable<int>;
+	//The following functions should be private in common practice, but kept public for testing purposes.
+	int hashFunct(int key);		//hash function
+	int hashFunct2(int key);	//second hash function in order to do double hashing
 
 private:
-	int capacity;   //current number of items in the hash table.
-
+	int numItems;   //current number of items in the hash table.
+	Record<T>* ht;
 
 };

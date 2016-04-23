@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
 
-	HashTable hashtable = new HashTable<Record>;
+	HashTable<int> hashtable;
 
 	int inc = 0;
 	int dec = 0;

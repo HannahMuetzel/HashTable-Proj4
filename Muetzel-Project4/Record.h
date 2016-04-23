@@ -58,9 +58,18 @@ public:
 		return key;
 	}
 
+	//Set the integer key of a record
+	void setKey(int key) {
+		this->key = key;
+	}
+
 	// Get the value of a record
 	T getValue() const {
 		return value;
+	}
+
+	void setType(RecordType type) {
+		this->type = type;
 	}
 
 	// Check if a record is empty
@@ -88,11 +97,5 @@ public:
 			os << "Key: " << me.key << ", Value: " << me.value;
 		return os;
 	}
-
-	~Record()
-	{
-	}
-
-	template class Record<int>;
 };
 
