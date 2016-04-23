@@ -25,13 +25,17 @@ bool HashTable<T>::insert(int key, T value, int& collisions) {
 
 	key = hashFunct(key);
 
-	while (!ht[key].isEmpty() && collisions <= MAXHASH*5) {
+	while (!ht[key].isEmpty() && collisions <= MAXHASH*2) {
 		//standard double hashing equation
 		key = hashFunct(key) + collisions * hashFunct2(key);
+		key = key % MAXHASH;
 		++collisions;
 	}
 
-	ht[key] = value;
+	Record<T> rec(key, value);
+	ht[key] = rec;
+	++numItems;
+	
 	return true;
 };
 
@@ -53,14 +57,14 @@ int HashTable<T>::hashFunct(int key) {
 	//right now, key is really freakin' big.
 	//do a % operator so we only get the remainder of what big key number is / MAXHASH
 	//this % operator should make it so that the key is within the range of 0 to 999.
-	return (key % MAXHASH);
+	return (abs(key) % MAXHASH);
 };
 
 template <class T>
 int HashTable<T>::hashFunct2(int key) {
 	key = key >> 3;
 	key = key % 164;
-	return key % MAXHASH;
+	return abs(key) % MAXHASH;
 }
 
 template <class T>
@@ -99,13 +103,10 @@ bool HashTable<T>::remove(int key) {
 
 template <class T>
 float HashTable<T>::alpha() {
-	float alpha = 0.0;
-	alpha = (numItems / MAXHASH);
-	return alpha;
+	return (float)((float)numItems / (float)MAXHASH);
 };
 
 // Define template variables
 template class HashTable<int>;
 template class HashTable<double>;
 template class HashTable<float>;
-template class HashTable<long>;

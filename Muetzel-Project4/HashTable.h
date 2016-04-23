@@ -14,10 +14,12 @@ public:
 	bool remove(int key);
 	bool find(int key, T& value);
 	float alpha();
-	friend ostream& operator<< (ostream& out, const HashTable& ht) {
+
+	friend ostream& operator<< (ostream& out, const HashTable& hashtab) {
 		for (size_t i = 0; i < MAXHASH; i++) {
-			out << ht[i] << " at the table position " << i << endl;
+			out << hashtab.ht[i] << " at the table position " << i << endl;
 		}
+		return out;
 	};
 
 	//The following functions should be private in common practice, but kept public for testing purposes.
